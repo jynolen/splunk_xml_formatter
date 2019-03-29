@@ -6,7 +6,7 @@ function save_options() {
         splunk_xml_theme: theme,
         splunk_xml_enable: enable
     }, function() {
-        // Update status to let user know options were saved.
+        // Update status to var user know options were saved.
         var status = document.getElementById('status');
         status.textContent = 'Options saved.';
         setTimeout(function() {

@@ -1,4 +1,4 @@
-let xml_enable_by_default = false;
+var xml_enable_by_default = false;
 
 var waitForEl = function(selector, callback) {
     if (jQuery(selector).length)
@@ -27,8 +27,8 @@ function checkForSplunk()
 
 function is_string_valide_xml(data)
 {
-    let parser = new DOMParser();
-    let o_dom = parser.parseFromString(data, "text/xml");
+    var parser = new DOMParser();
+    var o_dom = parser.parseFromString(data, "text/xml");
     return !o_dom.querySelector("parsererror");
 }
 
@@ -70,18 +70,18 @@ function htmlEntities(str) {
 
 function checkForXMLEvents()
 {
-    console.debug("Results present let's go");
+    console.debug("Results present var's go");
     $(".raw-event").each(function() {
-        raw_content = $(this);
+        var raw_content = $(this);
         if(!raw_content.attr("xml_done")) {        
-            let raw_event = raw_content.text();
-            let data_cid = raw_content.parent().attr("data-cid");
+            var raw_event = raw_content.text();
+            var data_cid = raw_content.parent().attr("data-cid");
             if(is_string_valide_xml(raw_event))
             {
-                let balise=$('<span parent_id="'+data_cid+'" class="beautiful_xml">Show raw event</span><br/>');
-                let content=$('<div class="xml-event wrap" style="display:none"></div>');
+                var balise=$('<span parent_id="'+data_cid+'" class="beautiful_xml">Show raw event</span><br/>');
+                var content=$('<div class="xml-event wrap" style="display:none"></div>');
                 
-                block=$('<pre>'+htmlEntities(formatXml(raw_event))+'</pre>');
+                var block=$('<pre>'+htmlEntities(formatXml(raw_event))+'</pre>');
                 hljs.highlightBlock(block[0]);
                 content.append(block);
                 balise.click(function() {
@@ -144,7 +144,8 @@ function checkActiveTab()
 };
 
 $( document ).ready(function() {
-    chrome.runtime.sendMessage(message={"inject_splunk_js": checkForSplunk()}, responseCallback=function(response) {
+    var sending = browser.runtime.sendMessage({"inject_splunk_js": checkForSplunk()});
+    sending.then(function(response){
         if(response) {
             xml_enable_by_default=response.status;
             $("<style>").prop("type", "text/css").html(response.css).appendTo("head");

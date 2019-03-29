@@ -6,14 +6,12 @@
     "author": "Jean-Yves NOLEN <jynolen@gmail.com>",
     "short_name": "SplkXMLFormat",
     "permissions": [
-        "background", 
         "tabs", 
         "activeTab", 
         "storage"
     ],
     "background": {
-        "scripts": ["background.js"],
-        "persistent": true
+        "scripts": ["background.js"]
     },
     "options_ui": {
         "page": "options.html",
@@ -26,5 +24,11 @@
           "css":["./styles/splunk_xml.css", "./styles/github-gist.css"],
           "run_at": "document_end"
         }
-    ]
+    ],
+    "browser_specific_settings": {
+        "gecko": {
+          "id": "splunk_xml_formatter@jynolen.com",
+          "strict_min_version": "42.0"
+        }
+      }
 }
