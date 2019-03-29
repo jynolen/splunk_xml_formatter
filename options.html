@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Splunk XML Formatter</title>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <link href="styles/select2.css" rel="stylesheet" />
+    <script src="select2.min.js"></script>
+</head>
+<body style="width:800px; height: 350px">
+<img src="img/splunk.png" alt="Splunk Logo"/>
+<h3>Theme (see <a href="https://highlightjs.org/static/demo/">https://highlightjs.org/static/demo/</a>) for complete list : 
+<select id="theme">
+    <option value="a11y-dark.css">A 11 Y Dark</option>
+    <option value="a11y-light.css">A 11 Y Light</option>
+    <option value="agate.css">Agate</option>
+    <option value="androidstudio.css">An Old Hope</option>
+    <option value="an-old-hope.css">Androidstudio</option>
+    <option value="arduino-light.css">Arduino Light</option>
+    <option value="arta.css">Arta</option>
+    <option value="ascetic.css">Ascetic</option>
+    <option value="atelier-cave-dark.css">Atelier Cave Dark</option>
+    <option value="atelier-cave-light.css">Atelier Cave Light</option>
+    <option value="atelier-dune-dark.css">Atelier Dune Dark</option>
+    <option value="atelier-dune-light.css">Atelier Dune Light</option>
+    <option value="atelier-estuary-dark.css">Atelier Estuary Dark</option>
+    <option value="atelier-estuary-light.css">Atelier Estuary Light</option>
+    <option value="atelier-forest-dark.css">Atelier Forest Dark</option>
+    <option value="atelier-forest-light.css">Atelier Forest Light</option>
+    <option value="atelier-heath-dark.css">Atelier Heath Dark</option>
+    <option value="atelier-heath-light.css">Atelier Heath Light</option>
+    <option value="atelier-lakeside-dark.css">Atelier Lakeside Dark</option>
+    <option value="atelier-lakeside-light.css">Atelier Lakeside Light</option>
+    <option value="atelier-plateau-dark.css">Atelier Plateau Dark</option>
+    <option value="atelier-plateau-light.css">Atelier Plateau Light</option>
+    <option value="atelier-savanna-dark.css">Atelier Savanna Dark</option>
+    <option value="atelier-savanna-light.css">Atelier Savanna Light</option>
+    <option value="atelier-seaside-dark.css">Atelier Seaside Dark</option>
+    <option value="atelier-seaside-light.css">Atelier Seaside Light</option>
+    <option value="atelier-sulphurpool-dark.css">Atelier Sulphurpool Dark</option>
+    <option value="atelier-sulphurpool-light.css">Atelier Sulphurpool Light</option>
+    <option value="atom-one-dark.css">Atom One Dark Reasonable</option>
+    <option value="atom-one-dark-reasonable.css">Atom One Dark</option>
+    <option value="atom-one-light.css">Atom One Light</option>
+    <option value="brown-paper.css">Brown Paper</option>
+    <option value="codepen-embed.css">Codepen Embed</option>
+    <option value="color-brewer.css">Color Brewer</option>
+    <option value="darcula.css">Darcula</option>
+    <option value="dark.css">Dark</option>
+    <option value="darkula.css">Darkula</option>
+    <option value="docco.css">Docco</option>
+    <option value="dracula.css">Dracula</option>
+    <option value="far.css">Far</option>
+    <option value="foundation.css">Foundation</option>
+    <option value="github.css">Github Gist</option>
+    <option value="github-gist.css">Github</option>
+    <option value="gml.css">Gml</option>
+    <option value="googlecode.css">Googlecode</option>
+    <option value="grayscale.css">Grayscale</option>
+    <option value="gruvbox-dark.css">Gruvbox Dark</option>
+    <option value="gruvbox-light.css">Gruvbox Light</option>
+    <option value="hopscotch.css">Hopscotch</option>
+    <option value="hybrid.css">Hybrid</option>
+    <option value="idea.css">Idea</option>
+    <option value="ir-black.css">Ir Black</option>
+    <option value="isbl-editor-dark.css">Isbl Editor Dark</option>
+    <option value="isbl-editor-light.css">Isbl Editor Light</option>
+    <option value="kimbie.dark.css">Kimbie Dark</option>
+    <option value="kimbie.light.css">Kimbie Light</option>
+    <option value="lightfair.css">Lightfair</option>
+    <option value="magula.css">Magula</option>
+    <option value="mono-blue.css">Mono Blue</option>
+    <option value="monokai.css">Monokai Sublime</option>
+    <option value="monokai-sublime.css">Monokai</option>
+    <option value="nord.css">Nord</option>
+    <option value="obsidian.css">Obsidian</option>
+    <option value="ocean.css">Ocean</option>
+    <option value="paraiso-dark.css">Paraiso Dark</option>
+    <option value="paraiso-light.css">Paraiso Light</option>
+    <option value="pojoaque.css">Pojoaque</option>
+    <option value="purebasic.css">Purebasic</option>
+    <option value="qtcreator_dark.css">Qtcreator Dark</option>
+    <option value="qtcreator_light.css">Qtcreator Light</option>
+    <option value="railscasts.css">Railscasts</option>
+    <option value="rainbow.css">Rainbow</option>
+    <option value="routeros.css">Routeros</option>
+    <option value="school-book.css">School Book</option>
+    <option value="shades-of-purple.css">Shades Of Purple</option>
+    <option value="solarized-dark.css">Solarized Dark</option>
+    <option value="solarized-light.css">Solarized Light</option>
+    <option value="sunburst.css">Sunburst</option>
+    <option value="tomorrow.css">Tomorrow Night Blue</option>
+    <option value="tomorrow-night-blue.css">Tomorrow Night Bright</option>
+    <option value="tomorrow-night-bright.css">Tomorrow Night Eighties</option>
+    <option value="tomorrow-night.css">Tomorrow Night</option>
+    <option value="tomorrow-night-eighties.css">Tomorrow</option>
+    <option value="vs2015.css">Vs</option>
+    <option value="vs.css">Vs 2015</option>
+    <option value="xcode.css">Xcode</option>
+    <option value="xt256.css">Xt 256</option>
+    <option value="zenburn.css">Zenburn</option>    
+</select>
+</h3>
+<h3>Enable XML Formatter by default: <input type="checkbox" id="enable"></h3>  
+
+<div id="status"></div>
+<button id="save">Save</button>
+
+<script src="options.js"></script>
+</body>
+</html>
