@@ -1,7 +1,7 @@
 function restore_options(callback) {
     // Use default value theme = 'github-gist' and enable = true.
     chrome.storage.sync.get({
-        splunk_xml_theme: 'github-gist',
+        splunk_xml_theme: 'github-gist.css',
         splunk_xml_enable: true
     }, function(items) {
         callback(items.splunk_xml_enable, items.splunk_xml_theme);

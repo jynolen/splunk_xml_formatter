@@ -3,11 +3,12 @@
     "version": "1.0",
     "description": "With this extension, you can add syntax highlight / formatting for XML events in Splunk",
     "manifest_version": 2,
+    "author": "Jean-Yves NOLEN <jynolen@gmail.com>",
+    "short_name": "SplkXMLFormat",
     "permissions": [
         "background", 
         "tabs", 
-        "activeTab",
-        "<all_urls>", 
+        "activeTab", 
         "storage"
     ],
     "background": {
