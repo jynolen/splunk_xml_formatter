@@ -1,8 +1,10 @@
+var browser_ = typeof chrome !== "undefined" ? chrome : browser
+
 // Saves options to chrome.storage
 function save_options() {
     var theme = document.getElementById('theme').value;
     var enable = document.getElementById('enable').checked;
-    chrome.storage.sync.set({
+    browser_.storage.sync.set({
         splunk_xml_theme: theme,
         splunk_xml_enable: enable
     }, function() {
@@ -19,7 +21,7 @@ function save_options() {
   // stored in chrome.storage.
 function restore_options() {
     // Use default value theme = 'github-gist' and enable = true.
-    chrome.storage.sync.get({
+    browser_.storage.sync.get({
         splunk_xml_theme: 'github-gist.css',
         splunk_xml_enable: true
     }, function(items) {

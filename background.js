@@ -1,6 +1,8 @@
+var browser_ = typeof chrome !== "undefined" ? chrome : browser
+
 function restore_options(callback) {
     // Use default value theme = 'github-gist' and enable = true.
-    browser.storage.sync.get({
+    browser_.storage.sync.get({
         splunk_xml_theme: 'github-gist.css',
         splunk_xml_enable: true
     }, function(items) {
@@ -13,11 +15,11 @@ function callbackSplunkPage(array_of_result)
     console.log(array_of_result)
 }
 
-browser.runtime.onMessage.addListener(function(request, sender, callback) {
+browser_.runtime.onMessage.addListener(function(request, sender, callback) {
     if (request.inject_splunk_js) {
         //Inject CSS
         restore_options(function(enable_status, theme){
-            var url = browser.runtime.getURL("styles/"+theme);
+            url = browser_.runtime.getURL("styles/"+theme);
             const req = new XMLHttpRequest();
             req.onreadystatechange = function(event) {
                 // XMLHttpRequest.DONE === 4
