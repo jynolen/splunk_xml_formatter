@@ -1,5 +1,5 @@
 var browser_ = typeof chrome !== "undefined" ? chrome : browser
-var xml_enable_by_default = false;
+let xml_enable_by_default = false;
 
 var waitForEl = function(selector, callback) {
     if (jQuery(selector).length)
@@ -28,8 +28,8 @@ function checkForSplunk()
 
 function is_string_valide_xml(data)
 {
-    var parser = new DOMParser();
-    var o_dom = parser.parseFromString(data, "text/xml");
+    let parser = new DOMParser();
+    let o_dom = parser.parseFromString(data, "text/xml");
     return !o_dom.querySelector("parsererror");
 }
 
@@ -91,12 +91,7 @@ function addListenerToEventExpander()
     });
     $(".expands").each(function(){
         var expand_block = $(this)
-        if(!expand_block.attr("listener_set")){browser_.runtime.onMessage.addListener(function(request, sender, callback) {
-            if (request.inject_splunk_js) {
-                //Inject CSS
-                restore_options(function(enable_status, theme){
-                    url = browser_.runtime.getURL("styles/"+theme);
-        
+        if(!expand_block.attr("listener_set")){
             expand_block.click(function(){
                 setTimeout(function(){
                     waitForBlockVisible(expand_block.parent().find(".raw-event"), processBlock);                 
@@ -157,39 +152,6 @@ var waitForBlockVisible = function(block, callback)
 
 function checkForXMLEvents()
 {
-    console.debug("Results present var's go");
-    $(".raw-event").each(function() {
-        var raw_content = $(this);
-        if(!raw_content.attr("xml_done")) {        
-            var raw_event = raw_content.text();
-            var data_cid = raw_content.parent().attr("data-cid");
-            if(is_string_valide_xml(raw_event))
-            {
-                var balise=$('<span parent_id="'+data_cid+'" class="beautiful_xml">Show raw event</span><br/>');
-                var content=$('<div class="xml-event wrap" style="display:none"></div>');
-                
-                var block=$('<pre>'+htmlEntities(formatXml(raw_event))+'</pre>');
-                hljs.highlightBlock(block[0]);
-                content.append(block);
-                balise.click(function() {
-                    if(content.is(":visible")) {
-                        $(this).text("Show formated XML");                        
-                    }
-                    else {
-                        $(this).text("Show raw event");
-                    }
-                    content.toggle();
-                    $("div[data-cid="+$(this).attr("parent_id")+"] > .raw-event").toggle();
-                });
-                raw_content.parent().prepend(content);
-                raw_content.parent().prepend(balise);
-                raw_content.attr("xml_done", true);
-                if(xml_enable_by_default) {
-                    content.toggle();
-                    $("div[data-cid="+data_cid+"] > .raw-event").toggle();
-                }
-            }
-        }
     console.debug("Results present let's go");
     addListenerToEventExpander();
     $(".raw-event").each(function() {
@@ -250,22 +212,44 @@ $(document).keyup(function (e) {
     delete keys[e.which];
 });
 
-$( document ).ready(function() {
-    var sending = browser_.runtime.sendMessage(message={"inject_splunk_js": checkForSplunk()});
-    sending.then(function(response) {
-        if(response) {
-            xml_enable_by_default=response.status;
-            $("<style>").prop("type", "text/css").html(response.css).appendTo("head");
-            waitForEl("td.event", checkForXMLEvents);
-            waitForEl(".search-button", function(){
-                var element = $(".search-button").find("a");
-                if(!element.attr("listener_set")){
-                    element.click(function(){
-                        setTimeout(function(){ waitForEl("td.event", checkForXMLEvents); }, 8000);
-                    });
-                    element.attr("listener_set", true);                     
-                }                
-            });           
-        }
+if(typeof chrome !== "undefined"){
+    $( document ).ready(function() {
+        browser_.runtime.sendMessage(message={"inject_splunk_js": checkForSplunk()}, responseCallback=function(response) {
+            if(response) {
+                xml_enable_by_default=response.status;
+                $("<style>").prop("type", "text/css").html(response.css).appendTo("head");
+                waitForEl("td.event", checkForXMLEvents);
+                waitForEl(".search-button", function(){
+                    var element = $(".search-button").find("a");
+                    if(!element.attr("listener_set")){
+                        element.click(function(){
+                            setTimeout(function(){ waitForEl("td.event", checkForXMLEvents); }, 8000);
+                        });
+                        element.attr("listener_set", true);                     
+                    }                
+                });           
+            }
+        });
     });
-});
+} else {
+    $( document ).ready(function() {
+        var sending = browser_.runtime.sendMessage(message={"inject_splunk_js": checkForSplunk()});
+        sending.then(function(response) {
+            if(response) {
+                xml_enable_by_default=response.status;
+                $("<style>").prop("type", "text/css").html(response.css).appendTo("head");
+                waitForEl("td.event", checkForXMLEvents);
+                waitForEl(".search-button", function(){
+                    var element = $(".search-button").find("a");
+                    if(!element.attr("listener_set")){
+                        element.click(function(){
+                            setTimeout(function(){ waitForEl("td.event", checkForXMLEvents); }, 8000);
+                        });
+                        element.attr("listener_set", true);                     
+                    }                
+                });           
+            }
+        });
+    });
+}
+
