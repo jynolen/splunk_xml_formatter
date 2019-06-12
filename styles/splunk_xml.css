@@ -7,3 +7,5 @@
     text-shadow: 0 0 red;
     text-decoration: underline;
 }
+
+.nowrap > pre { white-space: pre; }
