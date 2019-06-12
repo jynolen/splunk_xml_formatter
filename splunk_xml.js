@@ -1,6 +1,114 @@
 var browser_ = typeof chrome !== "undefined" ? chrome : browser
 let xml_enable_by_default = false;
 
+var Formatter = function (options) {
+    this.init(options);
+    //TODO - if options object maps any functions, add them as appropriately named methods
+    var methodName = this.options.method;
+    if (!$.isFunction(this[methodName])) {
+        $.error("'" + methodName + "' is not a Formatter method.");
+    };
+    this.format = function(text) { //alias to currently selected method
+        return this[this.options.method].call(this, text);
+    };
+};
+
+
+/**
+ * putting the methods into the prototype instead of the constructor method
+ * enables more efficient on-the-fly creation of Formatter instances
+ */
+var createShiftArr=function (step) {
+    var space = '    ';
+    if ( isNaN(parseInt(step)) ) {  // argument is string
+        space = step;
+    } else { // argument is integer
+        space = new Array(step + 1).join(' '); //space is result of join (a string), not an array
+    }
+    var shift = ['\n']; // array of shifts
+    for(var ix=0;ix<100;ix++){
+        shift.push(shift[ix]+space);
+    }
+    return shift;
+};
+
+Formatter.prototype = {
+    options: {},
+
+    init: function(options) {
+        this.options = options;
+        this.step = this.options.step;
+        this.preserveComments = this.options.preserveComments;
+        this.shift = createShiftArr(this.step);
+    },
+
+    xml: function(text) {
+        var ar = text.replace(/>\s{0,}</g,"><")
+                     .replace(/</g,"~::~<")
+                     .replace(/\s*xmlns\:/g,"~::~xmlns:")
+                     .replace(/\s*xmlns\=/g,"~::~xmlns=")
+                     .split('~::~'),
+            len = ar.length,
+            inComment = false,
+            deep = 0,
+            str = '',
+            ix = 0;
+
+        for(ix=0;ix<len;ix++) {
+            // start comment or <![CDATA[...]]> or <!DOCTYPE //
+            if(ar[ix].search(/<!/) > -1) {
+                str += this.shift[deep]+ar[ix];
+                inComment = true;
+                // end comment  or <![CDATA[...]]> //
+                if(ar[ix].search(/-->/) > -1 || ar[ix].search(/\]>/) > -1 || ar[ix].search(/!DOCTYPE/) > -1 ) {
+                    inComment = false;
+                }
+            } else
+            // end comment  or <![CDATA[...]]> //
+            if(ar[ix].search(/-->/) > -1 || ar[ix].search(/\]>/) > -1) {
+                str += ar[ix];
+                inComment = false;
+            } else
+            // <elm></elm> //
+            if( /^<\w/.exec(ar[ix-1]) && /^<\/\w/.exec(ar[ix]) &&
+                /^<[\w:\-\.\,]+/.exec(ar[ix-1]) == /^<\/[\w:\-\.\,]+/.exec(ar[ix])[0].replace('/','')) {
+                str += ar[ix];
+                if(!inComment) deep--;
+            } else
+             // <elm> //
+            if(ar[ix].search(/<\w/) > -1 && ar[ix].search(/<\//) == -1 && ar[ix].search(/\/>/) == -1 ) {
+                str = !inComment ? str += this.shift[deep++]+ar[ix] : str += ar[ix];
+            } else
+             // <elm>...</elm> //
+            if(ar[ix].search(/<\w/) > -1 && ar[ix].search(/<\//) > -1) {
+                str = !inComment ? str += this.shift[deep]+ar[ix] : str += ar[ix];
+            } else
+            // </elm> //
+            if(ar[ix].search(/<\//) > -1) {
+                str = !inComment ? str += this.shift[--deep]+ar[ix] : str += ar[ix];
+            } else
+            // <elm/> //
+            if(ar[ix].search(/\/>/) > -1 ) {
+                str = !inComment ? str += this.shift[deep]+ar[ix] : str += ar[ix];
+            } else
+            // <? xml ... ?> //
+            if(ar[ix].search(/<\?/) > -1) {
+                str += this.shift[deep]+ar[ix];
+            } else
+            // xmlns //
+            if( ar[ix].search(/xmlns\:/) > -1  || ar[ix].search(/xmlns\=/) > -1) {
+                str += this.shift[deep]+ar[ix];
+            }
+
+            else {
+                str += ar[ix];
+            }
+        }
+
+        return  (str[0] == '\n') ? str.slice(1) : str;
+    }
+};
+
 var waitForEl = function(selector, callback) {
     if (jQuery(selector).length)
     {
@@ -33,8 +141,12 @@ function is_string_valide_xml(data)
     return !o_dom.querySelector("parsererror");
 }
 
+function formatXml(text) {
+    var fmt = new Formatter({method: 'xml', step: '\t'});
+    return fmt.xml(text);
+}
 
-function formatXml(xml) {
+function formatXml2(xml) {
     var formatted = '';
     var reg = /(>)(<)(\/*)/g;
     xml = xml.replace(reg, '$1\r\n$2$3');
@@ -66,7 +178,7 @@ function formatXml(xml) {
 }
 
 function htmlEntities(str) {
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/(?:\r\n|\r|\n)/g, '<br/>');
 }
 
 function addListenerToEventExpander()
@@ -111,9 +223,10 @@ function processBlock(block)
     if(is_string_valide_xml(raw_event))
     {
         let balise=$('<span parent_id="'+data_cid+'" class="beautiful_xml">Show raw event</span><br/>');
-        let content=$('<div class="xml-event wrap" style="display:none"></div>');
+        let content=$('<div class="xml-event nowrap" style="display:none"></div>');
         
         block=$('<pre>'+htmlEntities(formatXml(raw_event))+'</pre>');
+        hljs.configure({ tabReplace: '    '});
         hljs.highlightBlock(block[0]);
         content.append(block);
         balise.click(function() {
@@ -135,13 +248,29 @@ function processBlock(block)
         }
     }
 }
+var waitForBlockInline = function(parentID, oldText, callback)
+{
+    let block = $("[data-cid='"+parentID+"']").find(".raw-event");
+    new_text = block.text();
+    if(new_text == oldText) {
+        setTimeout(function() { waitForBlockInline(parentID, oldText, callback); }, 2000);
+    } else {
+        callback(block);
+    }
+}
+
 
 var waitForBlockVisible = function(block, callback)
 {
     if(!block.attr("xml_done")) {
         if(!block.is(":visible"))
         {
-            setTimeout(waitForBlockVisible(block, callback), 2000);
+            setTimeout(function() { waitForBlockVisible(block, callback); }, 2000);
+        }
+        else if($(block.parent()).find(".showinline").length > 0) {
+            $(block.parent()).find(".showinline").click(function(){
+                waitForBlockInline($(block.parent()).attr("data-cid"), block.text(), callback);
+            });
         }
         else
         {
@@ -210,6 +339,10 @@ $(document).keydown(function (e) {
 
 $(document).keyup(function (e) {
     delete keys[e.which];
+});
+
+$( document ).ajaxStart(function() {
+    console.info("Start AJAX Request");
 });
 
 if(typeof chrome !== "undefined"){
