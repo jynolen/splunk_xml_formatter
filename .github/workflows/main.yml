@@ -2,7 +2,7 @@ name: BuildRelease
 on:
   push:
     branches: [ dev ]
-    tags: [v*]
+    tags: [ v* ]
 jobs:
   build_chrome:
     runs-on: ubuntu-latest
