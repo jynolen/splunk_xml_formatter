@@ -2,20 +2,39 @@ name: BuildRelease
 on:
   push:
     branches: [ dev ]
-    tags: [v*]
+    tags: [ v* ]
 jobs:
   build_chrome:
     runs-on: ubuntu-latest
-    steps:
+    steps:      
     - uses: actions/checkout@v2
-    - name: Print env
-      run: env
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install github3.py      
     - name: Build the manifest
-      run: python3 buildManifest.py     
+      run: python3 build_and_release.py
+      env: # Set the secret as an input
+        TOKEN_EMAIL: ${{ secrets.TOKEN_EMAIL }}
+        TOKEN_RELEASE: ${{ secrets.TOKEN_RELEASE }}      
   build_firefox:
     runs-on: ubuntu-latest
-    steps:
+    steps:      
     - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install github3.py      
     - name: Build the manifest
-      run: python3 buildManifest.py --firefox
-  
+      run: python3 build_and_release.py --firefox
+      env: # Set the secret as an input
+        TOKEN_EMAIL: ${{ secrets.TOKEN_EMAIL }}
+        TOKEN_RELEASE: ${{ secrets.TOKEN_RELEASE }}     
