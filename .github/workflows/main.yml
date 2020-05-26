@@ -6,16 +6,20 @@ on:
 jobs:
   build_chrome:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_AUTHOR: ${{ github }}
     steps:
     - uses: actions/checkout@v2
     - name: Print env
       run: env
     - name: Build the manifest
-      run: python3 buildManifest.py     
+      run: python3 build.py
+    - name: Echo Manifest
+      run: cat manifest.json
   build_firefox:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Build the manifest
-      run: python3 buildManifest.py --firefox
+      run: python3 build.py --firefox
   
