@@ -76,4 +76,8 @@ zip_name = create_zip()
 release = release_exists()
 if release is None:
     release = create_release()
+
+for asset in release.assets():
+    if asset.name == zip_name:
+        asset.delete()
 release.upload_asset(content_type="application/zip", name=zip_name, asset=open(zip_name, "rb"))
