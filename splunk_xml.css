@@ -1,0 +1,18 @@
+.beautiful_xml {
+    text-shadow: 0 0 black;
+    text-decoration: underline;
+}
+
+.beautiful_xml:hover {
+    text-shadow: 0 0 red;
+    text-decoration: underline;
+}
+
+.nowrap > pre { white-space: pre; }
+ 
+.xml-warning {
+    padding:10px;
+    margin:10px 0;
+    color: #9F6000;
+    background-color: #FEEFB3;
+}
