@@ -4,10 +4,12 @@ import sys
 import requests
 import zipfile
 
-response = requests.get("https://api.github.com/users/%s" % os.environ.get("GITHUB_ACTOR"))
+
+header = {"Authorization": "token %s" % os.environ.get("TOKEN_EMAIL")}
+response = requests.get("https://api.github.com/users/%s" % os.environ.get("GITHUB_ACTOR"), headers=header)
 
 json_manifest = json.load(open("manifest.json.tpl"))
-json_manifest["author"] = response.json().get("Name")
+json_manifest["author"] = "%s <%s>" % (response.json().get("name"), response.json().get("email"))
 version = os.environ.get("GITHUB_REF").split("/")[-1]
 json_manifest["version"] = version
 
