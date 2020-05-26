@@ -9,7 +9,7 @@ response = requests.get("https://api.github.com/users/%s" % os.environ.get("GITH
 json_manifest = json.load(open("manifest.json.tpl"))
 json_manifest["author"] = response.json().get("Name")
 version = os.environ.get("GITHUB_REF").split("/")[-1]
-json_manifest["version"] = 
+json_manifest["version"] = version
 
 if len(sys.argv) == 2 and sys.argv[1] == "--firefox":
     json_manifest["browser_specific_settings"] = {
@@ -26,6 +26,6 @@ def zipdir(path, ziph):
             ziph.write(os.path.join(root, file))
     
 json.dump(json_manifest, open("manifest.json", "w"), indent=4)
-zipf = zipfile.ZipFile('splunk_xml_formatter.%s.zip' % os.environ.get("GITHUB_REF"), 'w', zipfile.ZIP_DEFLATED)
+zipf = zipfile.ZipFile('splunk_xml_formatter.%s.zip' % version, 'w', zipfile.ZIP_DEFLATED)
 zipdir('.', zipf)
 zipf.close()
