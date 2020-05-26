@@ -28,17 +28,19 @@ def create_manifest():
 
 
 def create_zip():
-    def zipdir(path, ziph):
-        # ziph is zipfile handle
-        for root, dirs, files in os.walk(path):
-            for file in files:
-                ziph.write(os.path.join(root, file))
     if len(sys.argv) == 2 and sys.argv[1] == "--firefox":
         zipName = 'splunk_xml_formatter.firefox.%s.zip' % version
     else:
         zipName = 'splunk_xml_formatter.chrome.%s.zip' % version
     zipf = zipfile.ZipFile(zipName, 'w', zipfile.ZIP_DEFLATED)
-    zipdir('.', zipf)
+    zipf.write("injector.js")
+    zipf.write("manifest.json")
+    zipf.write("splunk_xml.js")
+    zipf.write("splunk_xml.css")
+    zipf.write("LICENSE")
+    zipf.write("img/splunk-icon-01.png")
+    zipf.write("img/splunk.png")
+    zipf.write("README.md")
     zipf.close()
     return zipName
 

@@ -33,4 +33,5 @@ All this document refer to `splunk_xml.js`
     c. Highligh all event in another div
 2. On click on style
     a. When another style is selected a new CSS is download and a reference is set in a cookie
-    
+
+Github Source: https://github.com/jynolen/splunk_xml_formatter/
