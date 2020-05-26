@@ -13,9 +13,9 @@ jobs:
       with:
         python-version: '3.x'
     - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install github3.py      
+      run: |
+        python -m pip install --upgrade pip
+        pip install github3.py      
     - name: Build the manifest
       run: python3 build_and_release.py
       env: # Set the secret as an input
@@ -30,9 +30,9 @@ jobs:
       with:
         python-version: '3.x'
     - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install github3.py      
+      run: |
+        python -m pip install --upgrade pip
+        pip install github3.py      
     - name: Build the manifest
       run: python3 build_and_release.py --firefox
       env: # Set the secret as an input
