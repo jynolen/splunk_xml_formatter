@@ -6,15 +6,20 @@ on:
 jobs:
   build_chrome:
     runs-on: ubuntu-latest
+    with: # Set the secret as an input
+      TOKEN_EMAIL: ${{ secrets.TOKEN_EMAIL }}
+      TOKEN_RELEASE: ${{ secrets.TOKEN_RELEASE }}
     steps:
     - uses: actions/checkout@v2
-    - name: Print env
-      run: env
+    - name: Install github3
+      run: pip install github3.py
     - name: Build the manifest
       run: python3 build_and_release.py
   build_firefox:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Install github3
+        run: pip install github3.py      
       - name: Build the manifest
         run: python3 build_and_release.py --firefox
