@@ -26,8 +26,8 @@ def zipdir(path, ziph):
     for root, dirs, files in os.walk(path):
         for file in files:
             ziph.write(os.path.join(root, file))
-    
+
 json.dump(json_manifest, open("manifest.json", "w"), indent=4)
-zipf = zipfile.ZipFile('splunk_xml_formatter.%s.zip' % version, 'w', zipfile.ZIP_DEFLATED)
+zipf = zipfile.ZipFile('build/splunk_xml_formatter.%s.zip' % version, 'w', zipfile.ZIP_DEFLATED)
 zipdir('.', zipf)
 zipf.close()

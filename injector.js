@@ -19,7 +19,7 @@ function checkForSplunk()
 
 if(checkForSplunk())
 {
-    injectScript( chrome.extension.getURL('splunk_xml.js'), 'body');
+    injectScript( chrome.extension.getURL('splunk_xml.js'), 'body' );
     injectScript( "//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js", 'body');
 }
 
