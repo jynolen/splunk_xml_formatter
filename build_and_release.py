@@ -33,11 +33,14 @@ def create_zip():
         for root, dirs, files in os.walk(path):
             for file in files:
                 ziph.write(os.path.join(root, file))
-    
-    zipf = zipfile.ZipFile('splunk_xml_formatter.%s.zip' % version, 'w', zipfile.ZIP_DEFLATED)
+    if len(sys.argv) == 2 and sys.argv[1] == "--firefox":
+        zipName = 'splunk_xml_formatter.firefox.%s.zip' % version
+    else:
+        zipName = 'splunk_xml_formatter.chrome.%s.zip' % version
+    zipf = zipfile.ZipFile(zipName, 'w', zipfile.ZIP_DEFLATED)
     zipdir('.', zipf)
     zipf.close()
-    return 'splunk_xml_formatter.%s.zip' % version
+    return zipName
 
 
 def release_exists():
