@@ -12,7 +12,7 @@ jobs:
       run: pip install github3.py
     - name: Build the manifest
       run: python3 build_and_release.py
-      with: # Set the secret as an input
+      env: # Set the secret as an input
         TOKEN_EMAIL: ${{ secrets.TOKEN_EMAIL }}
         TOKEN_RELEASE: ${{ secrets.TOKEN_RELEASE }}      
   build_firefox:
@@ -23,6 +23,6 @@ jobs:
         run: pip install github3.py      
       - name: Build the manifest
         run: python3 build_and_release.py --firefox
-        with: # Set the secret as an input
+        env: # Set the secret as an input
           TOKEN_EMAIL: ${{ secrets.TOKEN_EMAIL }}
           TOKEN_RELEASE: ${{ secrets.TOKEN_RELEASE }}      
