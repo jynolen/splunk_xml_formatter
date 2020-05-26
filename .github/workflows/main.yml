@@ -32,7 +32,12 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install github3.py      
+        pip install github3.py
+    - name: List EnvVar used
+      run: |
+        echo "GITHUB_REF=$GITHUB_REF"
+        echo "GITHUB_ACTOR=$GITHUB_ACTOR"
+        echo "GITHUB_REPOSITORY=$GITHUB_REPOSITORY"
     - name: Build the manifest
       run: python3 build_and_release.py --firefox
       env: # Set the secret as an input
