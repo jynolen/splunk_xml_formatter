@@ -47,8 +47,8 @@ def release_exists():
     user, repo = os.environ.get("GITHUB_REPOSITORY").split("/")
     repository = gh_release.repository(user, repo)
     try:
-        repository.release_from_tag("dev")
-        return repository.release_from_tag("dev")
+        repository.release_from_tag(version)
+        return repository.release_from_tag(version)
     except:
         return None
 
