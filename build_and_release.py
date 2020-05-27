@@ -6,6 +6,11 @@ import zipfile
 from github3 import GitHub
 
 version = os.environ.get("GITHUB_REF").split("/")[-1]
+if version == "dev":
+  version = "0.0"
+else:
+  version = version.replace("v","")
+
 is_tag = os.environ.get("GITHUB_REF").split("/")[-2] == "tags"
 
 gh_user = GitHub(token=os.environ.get("TOKEN_EMAIL"))
