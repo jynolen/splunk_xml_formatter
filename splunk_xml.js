@@ -240,7 +240,6 @@ let addXMLFormatButton = function() {
     if(jQuery.cookie("splunk_highlight") !== null)
         currentStyle = jQuery.cookie("splunk_highlight");
 
-    a.append(jQuery('<i class="icon-check" style="display:inline"></i>'));
     if(jQuery("#xmlFormatBtn").length == 0) {
         let xmlBoutonDiv1=jQuery('<div id="xmlFormatBtn" class="btn-group shared-vizcontrols-format">');
         let xmlBoutonA=jQuery('<a class="btn-pill popdown-toggle format" href="#" aria-label="Formater XML">');
