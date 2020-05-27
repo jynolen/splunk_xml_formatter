@@ -7,9 +7,9 @@ from github3 import GitHub
 
 version = os.environ.get("GITHUB_REF").split("/")[-1]
 if version == "dev":
-  version = "0.0"
+  version_manifest = "0.0"
 else:
-  version = version.replace("v","")
+  version_manifest = version.replace("v","")
 
 is_tag = os.environ.get("GITHUB_REF").split("/")[-2] == "tags"
 
@@ -20,7 +20,7 @@ def create_manifest():
     json_manifest = json.load(open("manifest.json.tpl"))
     user = gh_user.user(username=os.environ.get("GITHUB_ACTOR"))
     json_manifest["author"] = "%s <%s>" % (user.name, user.email)
-    json_manifest["version"] = version
+    json_manifest["version"] = version_manifest
 
     if len(sys.argv) == 2 and sys.argv[1] == "--firefox":
         json_manifest["browser_specific_settings"] = {

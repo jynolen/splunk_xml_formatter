@@ -1,30 +1,25 @@
-let highlightStyle = {"a11y-dark": "A 11 Y Dark", "a11y-light": "A 11 Y Light", "agate": "Agate", "an-old-hope": "An Old Hope", "androidstudio": "Androidstudio", "arduino-light": "Arduino Light", "arta": "Arta", "ascetic": "Ascetic", "atelier-cave-dark": "Atelier Cave Dark", "atelier-cave-light": "Atelier Cave Light", "atelier-dune-dark": "Atelier Dune Dark", "atelier-dune-light": "Atelier Dune Light", "atelier-estuary-dark": "Atelier Estuary Dark", "atelier-estuary-light": "Atelier Estuary Light", "atelier-forest-dark": "Atelier Forest Dark", "atelier-forest-light": "Atelier Forest Light", "atelier-heath-dark": "Atelier Heath Dark", "atelier-heath-light": "Atelier Heath Light", "atelier-lakeside-dark": "Atelier Lakeside Dark", "atelier-lakeside-light": "Atelier Lakeside Light", "atelier-plateau-dark": "Atelier Plateau Dark", "atelier-plateau-light": "Atelier Plateau Light", "atelier-savanna-dark": "Atelier Savanna Dark", "atelier-savanna-light": "Atelier Savanna Light", "atelier-seaside-dark": "Atelier Seaside Dark", "atelier-seaside-light": "Atelier Seaside Light", "atelier-sulphurpool-dark": "Atelier Sulphurpool Dark", "atelier-sulphurpool-light": "Atelier Sulphurpool Light", "atom-one-dark-reasonable": "Atom One Dark Reasonable", "atom-one-dark": "Atom One Dark", "atom-one-light": "Atom One Light", "brown-paper": "Brown Paper", "codepen-embed": "Codepen Embed", "color-brewer": "Color Brewer", "darcula": "Darcula", "dark": "Dark", "default": "Default", "docco": "Docco", "dracula": "Dracula", "far": "Far", "foundation": "Foundation", "github-gist": "Github Gist", "github": "Github", "gml": "Gml", "googlecode": "Googlecode", "gradient-dark": "Gradient Dark", "grayscale": "Grayscale", "gruvbox-dark": "Gruvbox Dark", "gruvbox-light": "Gruvbox Light", "hopscotch": "Hopscotch", "hybrid": "Hybrid", "idea": "Idea", "ir-black": "Ir Black", "isbl-editor-dark": "Isbl Editor Dark", "isbl-editor-light": "Isbl Editor Light", "kimbie.dark": "Kimbie Dark", "kimbie.light": "Kimbie Light", "lightfair": "Lightfair", "magula": "Magula", "mono-blue": "Mono Blue", "monokai-sublime": "Monokai Sublime", "monokai": "Monokai", "night-owl": "Night Owl", "nord": "Nord", "obsidian": "Obsidian", "ocean": "Ocean", "paraiso-dark": "Paraiso Dark", "paraiso-light": "Paraiso Light", "pojoaque": "Pojoaque", "purebasic": "Purebasic", "qtcreator_dark": "Qtcreator Dark", "qtcreator_light": "Qtcreator Light", "railscasts": "Railscasts", "rainbow": "Rainbow", "routeros": "Routeros", "school-book": "School Book", "shades-of-purple": "Shades Of Purple", "solarized-dark": "Solarized Dark", "solarized-light": "Solarized Light", "srcery": "Srcery", "sunburst": "Sunburst", "tomorrow-night-blue": "Tomorrow Night Blue", "tomorrow-night-bright": "Tomorrow Night Bright", "tomorrow-night-eighties": "Tomorrow Night Eighties", "tomorrow-night": "Tomorrow Night", "tomorrow": "Tomorrow", "vs": "Vs", "vs2015": "Vs 2015", "xcode": "Xcode", "xt256": "Xt 256"}
-var Formatter = function (options) {
+let highlightStyle = {"a11y-dark": "A 11 Y Dark", "a11y-light": "A 11 Y Light", "agate": "Agate", "an-old-hope": "An Old Hope", "androidstudio": "Androidstudio", "arduino-light": "Arduino Light", "arta": "Arta", "ascetic": "Ascetic", "atelier-cave-dark": "Atelier Cave Dark", "atelier-cave-light": "Atelier Cave Light", "atelier-dune-dark": "Atelier Dune Dark", "atelier-dune-light": "Atelier Dune Light", "atelier-estuary-dark": "Atelier Estuary Dark", "atelier-estuary-light": "Atelier Estuary Light", "atelier-forest-dark": "Atelier Forest Dark", "atelier-forest-light": "Atelier Forest Light", "atelier-heath-dark": "Atelier Heath Dark", "atelier-heath-light": "Atelier Heath Light", "atelier-lakeside-dark": "Atelier Lakeside Dark", "atelier-lakeside-light": "Atelier Lakeside Light", "atelier-plateau-dark": "Atelier Plateau Dark", "atelier-plateau-light": "Atelier Plateau Light", "atelier-savanna-dark": "Atelier Savanna Dark", "atelier-savanna-light": "Atelier Savanna Light", "atelier-seaside-dark": "Atelier Seaside Dark", "atelier-seaside-light": "Atelier Seaside Light", "atelier-sulphurpool-dark": "Atelier Sulphurpool Dark", "atelier-sulphurpool-light": "Atelier Sulphurpool Light", "atom-one-dark-reasonable": "Atom One Dark Reasonable", "atom-one-dark": "Atom One Dark", "atom-one-light": "Atom One Light", "brown-paper": "Brown Paper", "codepen-embed": "Codepen Embed", "color-brewer": "Color Brewer", "darcula": "Darcula", "dark": "Dark", "default": "Default", "docco": "Docco", "dracula": "Dracula", "far": "Far", "foundation": "Foundation", "github-gist": "Github Gist", "github": "Github", "gml": "Gml", "googlecode": "Googlecode", "gradient-dark": "Gradient Dark", "grayscale": "Grayscale", "gruvbox-dark": "Gruvbox Dark", "gruvbox-light": "Gruvbox Light", "hopscotch": "Hopscotch", "hybrid": "Hybrid", "idea": "Idea", "ir-black": "Ir Black", "isbl-editor-dark": "Isbl Editor Dark", "isbl-editor-light": "Isbl Editor Light", "kimbie.dark": "Kimbie Dark", "kimbie.light": "Kimbie Light", "lightfair": "Lightfair", "magula": "Magula", "mono-blue": "Mono Blue", "monokai-sublime": "Monokai Sublime", "monokai": "Monokai", "night-owl": "Night Owl", "nord": "Nord", "obsidian": "Obsidian", "ocean": "Ocean", "paraiso-dark": "Paraiso Dark", "paraiso-light": "Paraiso Light", "pojoaque": "Pojoaque", "purebasic": "Purebasic", "qtcreator_dark": "Qtcreator Dark", "qtcreator_light": "Qtcreator Light", "railscasts": "Railscasts", "rainbow": "Rainbow", "routeros": "Routeros", "school-book": "School Book", "shades-of-purple": "Shades Of Purple", "solarized-dark": "Solarized Dark", "solarized-light": "Solarized Light", "srcery": "Srcery", "sunburst": "Sunburst", "tomorrow-night-blue": "Tomorrow Night Blue", "tomorrow-night-bright": "Tomorrow Night Bright", "tomorrow-night-eighties": "Tomorrow Night Eighties", "tomorrow-night": "Tomorrow Night", "tomorrow": "Tomorrow", "vs": "Vs", "vs2015": "Vs 2015", "xcode": "Xcode", "xt256": "Xt 256"};
+let Formatter = function (options) {
     this.init(options);
-    //TODO - if options object maps any functions, add them as appropriately named methods
-    var methodName = this.options.method;
+    let methodName = this.options.method;
     if (!jQuery.isFunction(this[methodName])) {
         jQuery.error("'" + methodName + "' is not a Formatter method.");
-    };
-    this.format = function(text) { //alias to currently selected method
+    }
+    this.format = function(text) {
         return this[this.options.method].call(this, text);
     };
 };
 
 
-/**
- * putting the methods into the prototype instead of the constructor method
- * enables more efficient on-the-fly creation of Formatter instances
- */
-var createShiftArr=function (step) {
-    var space = '    ';
-    if ( isNaN(parseInt(step)) ) {  // argument is string
+let createShiftArr=function (step) {
+    let space = "    ";
+    if ( Number.isNaN(parseInt(step)) ) {
         space = step;
-    } else { // argument is integer
-        space = new Array(step + 1).join(' '); //space is result of join (a string), not an array
+    } else {
+        space = new Array(step + 1).join(' ');
     }
-    var shift = ['\n']; // array of shifts
-    for(var ix=0;ix<100;ix++){
+    let shift = ["\n"];
+    for(let ix=0; ix<100; ix++){
         shift.push(shift[ix]+space);
     }
     return shift;
@@ -41,15 +36,15 @@ Formatter.prototype = {
     },
 
     xml: function(text) {
-        var ar = text.replace(/>\s{0,}</g,"><")
+        let ar = text.replace(/>\s{0,}</g,"><")
                      .replace(/</g,"~::~<")
                      .replace(/\s*xmlns\:/g,"~::~xmlns:")
                      .replace(/\s*xmlns\=/g,"~::~xmlns=")
-                     .split('~::~'),
+                     .split("~::~"),
             len = ar.length,
             inComment = false,
             deep = 0,
-            str = '',
+            str = "",
             ix = 0;
 
         for(ix=0;ix<len;ix++) {
@@ -69,7 +64,7 @@ Formatter.prototype = {
             } else
             // <elm></elm> //
             if( /^<\w/.exec(ar[ix-1]) && /^<\/\w/.exec(ar[ix]) &&
-                /^<[\w:\-\.\,]+/.exec(ar[ix-1]) == /^<\/[\w:\-\.\,]+/.exec(ar[ix])[0].replace('/','')) {
+                /^<[\w:\-\.\,]+/.exec(ar[ix-1]) == /^<\/[\w:\-\.\,]+/.exec(ar[ix])[0].replace("/","")) {
                 str += ar[ix];
                 if(!inComment) deep--;
             } else
@@ -103,22 +98,22 @@ Formatter.prototype = {
             }
         }
 
-        return  (str[0] == '\n') ? str.slice(1) : str;
+        return  (str[0] == "\n") ? str.slice(1) : str;
     }
 };
 
 
 if (!String.prototype.encodeHTML) {
     String.prototype.encodeHTML = function () {
-      return this.replace(/&/g, '&amp;')
-                 .replace(/</g, '&lt;')
-                 .replace(/>/g, '&gt;')
-                 .replace(/"/g, '&quot;')
-                 .replace(/'/g, '&apos;');
+      return this.replace(/&/g, "&amp;")
+                 .replace(/</g, "&lt;")
+                 .replace(/>/g, "&gt;")
+                 .replace(/"/g, "&quot;")
+                 .replace(/'/g, "&apos;");
     };
   }
 
-var waitForEl = function(selector, callback) {
+let waitForEl = function(selector, callback) {
     if (jQuery(selector).length)
     {
       callback();
@@ -129,18 +124,18 @@ var waitForEl = function(selector, callback) {
     }
 };
 
-function checkForSplunk()
+let checkForSplunk = function()
 {
-    const metas = document.getElementsByTagName('meta');
+    const metas = document.getElementsByTagName("meta");
     for (let i = 0; i < metas.length; i++) {
-        if (metas[i].getAttribute('name') === "author") {
-            return metas[i].getAttribute('content') === "Splunk Inc.";
+        if (metas[i].getAttribute("name") === "author") {
+            return metas[i].getAttribute("content") === "Splunk Inc.";
         }
     }
-    return False
+    return false;
 };
 
-function is_string_valid_xml(data)
+let is_string_valid_xml = function(data)
 {
     try {
         jQuery.parseXML(data);
@@ -151,21 +146,18 @@ function is_string_valid_xml(data)
       }
 };
 
-function formatXml(text) {
-    var fmt = new Formatter({method: 'xml', step: '\t'});
+let formatXml = function(text) {
+    let fmt = new Formatter({method: "xml", step: "\t"});
     return fmt.xml(text);
 };
 
-function htmlEntities(str) {
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/(?:\r\n|\r|\n)/g, '<br/>');
-};
 
-function searchXMLEvent() {
+let searchXMLEvent = function() {
     jQuery("td.event").find(".raw-event").each(function( index ) {
         if( is_string_valid_xml( jQuery(this).text() )) {
             let content=jQuery('<div class="xml-event xml-valid nowrap" style="display:none"></div>');
-            block=jQuery('<pre>'+htmlEntities(formatXml(jQuery(this).text()))+'</pre>');
-            hljs.configure({ tabReplace: '    '});
+            block=jQuery("<pre>"+formatXml(jQuery(this).text()).encodeHTML()+"</pre>");
+            hljs.configure({ tabReplace: "    "});
             hljs.highlightBlock(block[0]);
             content.append(block);
             if(jQuery(this).parent().find(".xml-event.xml-valid").length == 0)
@@ -174,8 +166,8 @@ function searchXMLEvent() {
         else {
             let content=jQuery('<div class="xml-event xml-invalid nowrap" style="display:none"></div>');
             block=jQuery('<pre lang="xml"><code class="xml">'+jQuery(this).text().encodeHTML()+'</code></pre>');
-            warning=jQuery('<pre class="xml-warning"><i class="icon-alert"></i> This event has an invalid XML content, try expend to all lines before toggle format XML again</pre>')
-            hljs.configure({ tabReplace: '    '});
+            warning=jQuery('<pre class="xml-warning"><i class="icon-alert"></i> This event has an invalid XML content, try expend to all lines before toggle format XML again</pre>');
+            hljs.configure({ tabReplace: "    "});
             hljs.highlightBlock(block[0]);
             content.append(block);
             content.append(warning);
@@ -190,20 +182,20 @@ function searchXMLEvent() {
             jQuery(this).toggle();
         });
     });
-}
+};
 
-function highlighStyleChoice(recordStyle="github-gist") {
+let highlighStyleChoice = function(recordStyle="github-gist") {
     let mainBlock = jQuery('<div class="dropdown-menu dropdown-menu-selectable dropdown-menu-default open" id="xmlStyleFormat" style="display:none">');
     mainBlock.append(jQuery('<div class="arrow" style="margin-left: -8px;">'));
     let styleList = jQuery('<ul class="dropdown-menu-main">');
-    let li = jQuery('<li>');
-    let a = jQuery('<a class="synthetic-select " target="_blank" href="https://highlightjs.org/static/demo" data-item-idx="0" data-item-value="github-gist">');
+    let li = jQuery("<li>");
+    let a = jQuery('<a class="synthetic-select " target="_blank" href="https://highlightjs.org/static/demo" data-item-idx="0">');
     a.append(jQuery('<i class="icon-check" style="display:none"></i>'));
     a.append(jQuery('<span class="link-label" style="color:#006eaa; text-decoration: underline">Go here for a preview of styles</span>'));
     li.append(a);
     styleList.append(li);
 
-    li = jQuery('<li>');
+    li = jQuery("<li>");
     a = jQuery('<a class="synthetic-select " target="_blank" href="#" data-item-idx="1" style="border-bottom: dashed 1px #e1e6eb" data-item-value="'+recordStyle+'">');
     a.append(jQuery('<i class="icon-check" style="display:inline"></i>'));
     a.append(jQuery('<span class="link-label">'+highlightStyle[recordStyle]+'</span>'));
@@ -212,38 +204,43 @@ function highlighStyleChoice(recordStyle="github-gist") {
 
     let index = 2;
     for (let styleId in highlightStyle) {
-        let styleName = highlightStyle[styleId]
-        li = jQuery('<li>');
+        let styleName = highlightStyle[styleId];
+        li = jQuery("<li>");
         a = jQuery('<a class="synthetic-select " href="#" data-item-idx="'+index+'" data-item-value="'+styleId+'">');
         a.append(jQuery('<i class="icon-check" style="display:none"></i>'));
         a.append(jQuery('<span class="link-label">'+styleName+'</span>'));
         a.bind("click", function(){
             selectStyle(styleId);
             mainBlock.toggle();
-        })
+        });
         li.append(a);
         styleList.append(li);
-        
+
     }
     mainBlock.append(styleList);
     mainBlock.append(jQuery('<div class="dropdown-footer"></div>'));
     return mainBlock;
-}
+};
 
-function selectStyle(style="github-gist") {
-    let hl = jQuery("link[title=highlightStyle]")
+let selectStyle = function(style="github-gist") {
+    let hl = jQuery("link[title=highlightStyle]");
     if (hl.length == 1) {
         hl.remove();
     }
-    style_url = "//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/"+style+".min.css"
+    style_url = "//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/"+style+".min.css";
     hl = jQuery('<link rel="stylesheet" title="highlightStyle">');
     hl.attr("href", style_url);
     jQuery("body").append(hl);
 
     jQuery.cookie("splunk_highlight", style, {"expire":50});
-}
+};
 
-function addXMLFormatButton() {
+let addXMLFormatButton = function() {
+    let currentStyle = "github-gist";
+    if(jQuery.cookie("splunk_highlight") !== null)
+        currentStyle = jQuery.cookie("splunk_highlight");
+
+    a.append(jQuery('<i class="icon-check" style="display:inline"></i>'));
     if(jQuery("#xmlFormatBtn").length == 0) {
         let xmlBoutonDiv1=jQuery('<div id="xmlFormatBtn" class="btn-group shared-vizcontrols-format">');
         let xmlBoutonA=jQuery('<a class="btn-pill popdown-toggle format" href="#" aria-label="Formater XML">');
@@ -261,7 +258,7 @@ function addXMLFormatButton() {
         xmlStyleBoutonA.append(jQuery("<span class='link-label'> XML Event Style</span>"));
         xmlStyleBoutonA.append(jQuery("<span class='caret'></span>"));
         xmlStyleBoutonDiv1.append(xmlStyleBoutonA);
-        styleList = highlighStyleChoice();
+        styleList = highlighStyleChoice(currentStyle);
         jQuery("div.events-controls-inner").prepend(xmlStyleBoutonDiv1);
         jQuery("div.events-controls-inner").prepend(xmlBoutonDiv1);
         jQuery("body").append(styleList);
@@ -272,19 +269,16 @@ function addXMLFormatButton() {
                 "margin":"0 0 0 0",
                 "top": xmlStyleBoutonDiv1.offset().top + 35,
                 "display": styleList.css("display") === "block" ? "none" : "block"
-            })
-            leftOffset = xmlStyleBoutonDiv1.offset().left - (styleList.width() - xmlStyleBoutonDiv1.width())/2
-            styleList.css("left", leftOffset)
+            });
+            leftOffset = xmlStyleBoutonDiv1.offset().left - (styleList.width() - xmlStyleBoutonDiv1.width())/2;
+            styleList.css("left", leftOffset);
         });
     }
-    if(jQuery.cookie("splunk_highlight") === null)
-        selectStyle();
-    else
-        selectStyle(jQuery.cookie("splunk_highlight"));
+    selectStyle(currentStyle);
 };
 
-function waitForjQuery(callback) {
-    if (typeof $ == 'undefined') {
+let waitForjQuery = function(callback) {
+    if (typeof jQuery == "undefined") {
         setTimeout(function() { waitForjQuery(callback); }, 100);
     }
     else
@@ -294,5 +288,5 @@ function waitForjQuery(callback) {
 };
 
 waitForjQuery(function() {
-    waitForEl("div.events-controls-inner", addXMLFormatButton)
+    waitForEl("div.events-controls-inner", addXMLFormatButton);
 });
