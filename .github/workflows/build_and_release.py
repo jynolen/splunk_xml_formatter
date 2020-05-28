@@ -34,9 +34,9 @@ def create_manifest():
 
 def create_zip():
     if len(sys.argv) == 2 and sys.argv[1] == "--firefox":
-        zipName = 'splunk_xml_formatter.firefox.dev.zip'
+        zipName = 'splunk_xml_formatter.firefox.%s.zip' % version
     else:
-        zipName = 'splunk_xml_formatter.chrome.dev.zip'
+        zipName = 'splunk_xml_formatter.chrome.%s.zip' % version
     zipf = zipfile.ZipFile(zipName, 'w', zipfile.ZIP_DEFLATED)
     # Add mandatory files
     zipf.write("manifest.json")
