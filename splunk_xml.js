@@ -124,17 +124,6 @@ let waitForEl = function(selector, callback) {
     }
 };
 
-let checkForSplunk = function()
-{
-    const metas = document.getElementsByTagName("meta");
-    for (let i = 0; i < metas.length; i++) {
-        if (metas[i].getAttribute("name") === "author") {
-            return metas[i].getAttribute("content") === "Splunk Inc.";
-        }
-    }
-    return false;
-};
-
 let is_string_valid_xml = function(data)
 {
     try {
@@ -196,9 +185,9 @@ let highlighStyleChoice = function(recordStyle="github-gist") {
     styleList.append(li);
 
     li = jQuery("<li>");
-    a = jQuery('<a class="synthetic-select " target="_blank" href="#" data-item-idx="1" style="border-bottom: dashed 1px #e1e6eb" data-item-value="'+recordStyle+'">');
+    a = jQuery('<a class="synthetic-select" id="linkToActiveStyle" target="_blank" href="#" data-item-idx="1" style="border-bottom: dashed 1px #e1e6eb" data-item-value="'+recordStyle+'">');
     a.append(jQuery('<i class="icon-check" style="display:inline"></i>'));
-    a.append(jQuery('<span class="link-label">'+highlightStyle[recordStyle]+'</span>'));
+    a.append(jQuery('<span class="link-label" id="spanToActiveStyle" >'+highlightStyle[recordStyle]+'</span>'));
     li.append(a);
     styleList.append(li);
 
@@ -232,14 +221,13 @@ let selectStyle = function(style="github-gist") {
     hl.attr("href", style_url);
     jQuery("body").append(hl);
 
-    jQuery.cookie("splunk_highlight", style, {"expire":50});
+    chrome.storage.local.set({"splunk_xml_highlight":style}, function() {
+        jQuery("#linkToActiveStyle").attr("data-item-value", style);
+        jQuery("#spanToActiveStyle").text(highlightStyle[style]);
+    });
 };
 
 let addXMLFormatButton = function() {
-    let currentStyle = "github-gist";
-    if(jQuery.cookie("splunk_highlight") !== null)
-        currentStyle = jQuery.cookie("splunk_highlight");
-
     if(jQuery("#xmlFormatBtn").length == 0) {
         let xmlBoutonDiv1=jQuery('<div id="xmlFormatBtn" class="btn-group shared-vizcontrols-format">');
         let xmlBoutonA=jQuery('<a class="btn-pill popdown-toggle format" href="#" aria-label="Formater XML">');
@@ -257,7 +245,7 @@ let addXMLFormatButton = function() {
         xmlStyleBoutonA.append(jQuery("<span class='link-label'> XML Event Style</span>"));
         xmlStyleBoutonA.append(jQuery("<span class='caret'></span>"));
         xmlStyleBoutonDiv1.append(xmlStyleBoutonA);
-        styleList = highlighStyleChoice(currentStyle);
+        styleList = highlighStyleChoice();
         jQuery("div.events-controls-inner").prepend(xmlStyleBoutonDiv1);
         jQuery("div.events-controls-inner").prepend(xmlBoutonDiv1);
         jQuery("body").append(styleList);
@@ -272,8 +260,13 @@ let addXMLFormatButton = function() {
             leftOffset = xmlStyleBoutonDiv1.offset().left - (styleList.width() - xmlStyleBoutonDiv1.width())/2;
             styleList.css("left", leftOffset);
         });
+        chrome.storage.local.get("splunk_xml_highlight", function(result) {
+            styleId = result.splunk_xml_highlight === undefined ? "github-gist" : result.splunk_xml_highlight;
+            jQuery("#linkToActiveStyle").attr("data-item-value", styleId);
+            jQuery("#spanToActiveStyle").text(highlightStyle[styleId]);
+            selectStyle(styleId);
+        });
     }
-    selectStyle(currentStyle);
 };
 
 let waitForjQuery = function(callback) {
@@ -286,6 +279,30 @@ let waitForjQuery = function(callback) {
     }
 };
 
+let injectScript = function(file, node) {
+    let th = document.getElementsByTagName(node)[0];
+    let s = document.createElement('script');
+    s.setAttribute('type', 'text/javascript');
+    s.setAttribute('src', file);
+    th.appendChild(s);
+}
+
+let checkForSplunk = function()
+{
+    const metas = document.getElementsByTagName('meta');
+    for (let i = 0; i < metas.length; i++) {
+        if (metas[i].getAttribute('name') === "author") {
+            return metas[i].getAttribute('content') === "Splunk Inc.";
+        }
+    }
+    return false;
+};
+
 waitForjQuery(function() {
-    waitForEl("div.events-controls-inner", addXMLFormatButton);
+    if(checkForSplunk()) {
+        waitForEl("div.events-controls-inner", addXMLFormatButton);
+    } else {
+        jQuery = null;
+        hljs = null;
+    }
 });

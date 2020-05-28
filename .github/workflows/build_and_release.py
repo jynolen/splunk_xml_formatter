@@ -7,14 +7,14 @@ from github3 import GitHub
 
 version = os.environ.get("GITHUB_REF").split("/")[-1]
 if version == "dev":
-  version_manifest = "0.0"
+    version_manifest = "0.0"
 else:
-  version_manifest = version.replace("v","")
+    version_manifest = version.replace("v","")
 
-is_tag = os.environ.get("GITHUB_REF").split("/")[-2] == "tags"
-
-gh_user = GitHub(token=os.environ.get("TOKEN_EMAIL"))
-gh_release = GitHub(token=os.environ.get("TOKEN_RELEASE"))
+if os.environ.get("GITHUB_REF") is not None:
+    is_tag = os.environ.get("GITHUB_REF").split("/")[-2] == "tags"
+    gh_user = GitHub(token=os.environ.get("TOKEN_EMAIL"))
+    gh_release = GitHub(token=os.environ.get("TOKEN_RELEASE"))
 
 def create_manifest():
     json_manifest = json.load(open("manifest.json.tpl"))
@@ -34,13 +34,15 @@ def create_manifest():
 
 def create_zip():
     if len(sys.argv) == 2 and sys.argv[1] == "--firefox":
-        zipName = 'splunk_xml_formatter.firefox.%s.zip' % version
+        zipName = 'splunk_xml_formatter.firefox.dev.zip'
     else:
-        zipName = 'splunk_xml_formatter.chrome.%s.zip' % version
+        zipName = 'splunk_xml_formatter.chrome.dev.zip'
     zipf = zipfile.ZipFile(zipName, 'w', zipfile.ZIP_DEFLATED)
-    zipf.write("injector.js")
+    # Add mandatory files
     zipf.write("manifest.json")
     zipf.write("splunk_xml.js")
+    zipf.write("highlightjs.min.js")
+    zipf.write("jquery.min.js")
     zipf.write("splunk_xml.css")
     zipf.write("LICENSE")
     zipf.write("img/splunk-icon-01.png")
@@ -80,6 +82,7 @@ def upload_artifact(zip_file, upload_url):
 
 create_manifest()
 zip_name = create_zip()
+
 release = release_exists()
 if release is None:
     release = create_release()

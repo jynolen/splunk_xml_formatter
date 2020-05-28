@@ -5,11 +5,13 @@
   "manifest_version": 2,
   "author": "",
   "short_name": "SplunkXMLFormatter",
-  "web_accessible_resources" : ["splunk_xml.js"],
+  "permissions" : [
+    "storage"
+  ],
   "content_scripts": [
       {
         "matches": ["<all_urls>"],
-        "js": [ "./injector.js" ],
+        "js": [ "./splunk_xml.js", "./highlightjs.min.js", "./jquery.min.js" ],
         "css":["./splunk_xml.css"],
         "run_at": "document_end"
       }
